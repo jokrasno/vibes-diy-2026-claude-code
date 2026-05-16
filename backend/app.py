@@ -3,35 +3,42 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import random
 import re
 import traceback
+import urllib.request
+import urllib.error
 from typing import Any
 
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 
 # ── Gemini setup ──────────────────────────────────────────────
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
+GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
 
 def _gemini_generate(prompt: str) -> str | None:
-    """Call Gemini 3.1 Flash Lite Preview and return text or None."""
-def _gemini_generate(prompt: str) -> str | None:
-    """Call Gemini and return text or None."""
+    """Call Gemini via REST API (no SDK needed) and return text or None."""
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={GEMINI_API_KEY}"
+    payload = json.dumps({
+        "contents": [{"parts": [{"text": prompt}]}],
+        "generationConfig": {
+            "temperature": 1.2,
+            "responseMimeType": "application/json",
+        },
+    }).encode("utf-8")
+    req = urllib.request.Request(url, data=payload, headers={"Content-Type": "application/json"})
     try:
-        from google import genai
-        from google.genai import types as t
-        client = genai.Client(api_key=GEMINI_API_KEY)
-        print(f"[Gemini] Calling model gemini-2.5-flash...")
-        resp = client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=prompt,
-            config=t.GenerateContentConfig(
-                temperature=1.2,
-                response_mime_type="application/json",
-            ),
-        )
-        print(f"[Gemini] Got response: {len(resp.text)} chars")
-        return resp.text
+        print(f"[Gemini] Calling {GEMINI_MODEL}...")
+        with urllib.request.urlopen(req, timeout=60) as resp:
+            body = json.loads(resp.read())
+        text = body["candidates"][0]["content"]["parts"][0]["text"]
+        print(f"[Gemini] Got response: {len(text)} chars")
+        return text
+    except urllib.error.HTTPError as e:
+        err_body = e.read().decode("utf-8", errors="replace")[:500]
+        print(f"[Gemini error] HTTP {e.code}: {err_body}")
+        return None
     except Exception as e:
         print(f"[Gemini error] {type(e).__name__}: {e}")
         traceback.print_exc()
