@@ -80,3 +80,5 @@ Desktop.ini
 # --- Sprite generation research (generated artifacts only) ---
 _sprite_generation_tests/.venv/
 _sprite_generation_tests/outputs/
+
+_sprite_generation_tests/
