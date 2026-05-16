@@ -1,0 +1,82 @@
+# --- Dependencies ---
+node_modules/
+
+# --- Build & bundler output ---
+dist/
+build/
+out/
+.vite/
+*.tsbuildinfo
+
+# --- Python (backend, scripts, research) ---
+.venv/
+venv/
+env/
+ENV/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg
+*.egg-info/
+.eggs/
+pip-log.txt
+pip-delete-this-directory.txt
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+.hypothesis/
+
+# --- Environment & secrets ---
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+credentials.json
+secrets.json
+
+# --- Logs & temp ---
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.cache/
+tmp/
+temp/
+*.tmp
+*.swp
+*~
+
+# --- Test & coverage ---
+coverage/
+.nyc_output/
+
+# --- OS ---
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# --- Editors & local tooling ---
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+.cursor/
+
+# --- Sprite generation research (generated artifacts only) ---
+_sprite_generation_tests/.venv/
+_sprite_generation_tests/outputs/

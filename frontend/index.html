@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>CameraQuest — Your World, Your RPG</title>
+  <meta name="description" content="Snap photos of any room. AI turns them into a playable pixel RPG dungeon campaign."/>
+  <meta name="theme-color" content="#060411"/>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="CameraQuest — Your World, Your RPG"/>
+  <meta property="og:description" content="Snap photos of any room. AI turns them into a playable pixel RPG dungeon campaign with enemies, NPCs, loot, and a boss."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://placehold.co/1200x630/060411/7ef9ff?text=⚔+CameraQuest"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="CameraQuest — Your World, Your RPG"/>
+  <meta name="twitter:description" content="Snap photos of any room. AI turns them into a playable pixel RPG dungeon campaign."/>
+
+  <!-- Favicon (pixel sword emoji) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>"/>
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>"/>
+</head>
+<body>
+  <!-- Scanline overlay -->
+  <div id="scanlines" aria-hidden="true"></div>
+
+  <!-- Particle background -->
+  <div id="particles" aria-hidden="true">
+    <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+    <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+    <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+    <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+    <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+    <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+    <div class="particle"></div><div class="particle"></div>
+  </div>
+
+  <!-- Toast container -->
+  <div id="toast-container"></div>
+
+<div id="app">
+  <aside id="control-panel">
+    <div class="brand">
+      <span class="sigil">⚔</span>
+      <div>
+        <p class="eyebrow">AI Pixel RPG · Hackathon Demo</p>
+        <h1 class="glitch-text" data-text="Camera&#10;Quest">Camera<br>Quest</h1>
+      </div>
+    </div>
+    <p class="tagline">Snap 3–5 photos of any room.<br>AI turns them into a playable dungeon campaign — enemies, NPCs, loot, and a boss, all born from your real world.</p>
+
+    <label class="upload-card" id="upload-label">
+      <input id="photo-input" type="file" accept="image/*" multiple/>
+      <span class="upload-icon">📷</span>
+      <span class="upload-title">Drop or choose 3–5 photos</span>
+      <small id="upload-hint">JPG / PNG · desk, kitchen, backyard — anywhere works</small>
+    </label>
+
+    <button id="generate-btn"><span class="btn-shine"></span>✨ Generate My Campaign</button>
+    <button id="demo-btn" class="secondary"><span class="btn-shine"></span>▶ Play Demo Campaign</button>
+
+    <div class="pipeline">
+      <h2>⚙ AI Pipeline</h2>
+      <ol id="pipeline-steps">
+        <li data-step="0">📂 Waiting for photos…</li>
+        <li data-step="1">🔍 Analysing scene objects</li>
+        <li data-step="2">🎨 Pixelating backgrounds</li>
+        <li data-step="3">🗺 Generating level JSON</li>
+        <li data-step="4">⚔ Stitching campaign</li>
+      </ol>
+    </div>
+
+    <section class="preview">
+      <h2>📜 Campaign Levels</h2>
+      <div id="level-list"></div>
+    </section>
+
+    <div class="controls-hint">
+      <h2>🎮 Controls</h2>
+      <div class="controls-grid">
+        <span>Move</span><span>WASD / Arrow keys</span>
+        <span>Attack</span><span>Bump into enemies</span>
+        <span>Talk</span><span>Walk up to NPCs</span>
+        <span>Portal</span><span>Defeat boss → step in</span>
+      </div>
+    </div>
+  </aside>
+
+  <main>
+    <div id="game-shell">
+      <div id="hud">
+        <span id="level-name">CameraQuest</span>
+        <span id="quest-text"><span class="quest-text-inner">Load the demo or upload photos to begin.</span></span>
+        <span id="health-text" aria-label="HP">❤ HP 5</span>
+      </div>
+      <div id="game"></div>
+      <div id="dialogue">
+        <span class="dialogue-speaker">SYSTEM</span>
+        <span class="dialogue-text">Welcome, adventurer. Click <strong>Play Demo Campaign</strong> to start — or upload real photos to forge your own quest.</span>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Virtual D-pad for touch devices -->
+<div id="dpad" aria-label="Virtual D-Pad">
+  <button class="dpad-btn dpad-up" data-dir="up" aria-label="Up">▲</button>
+  <button class="dpad-btn dpad-left" data-dir="left" aria-label="Left">◄</button>
+  <button class="dpad-btn dpad-right" data-dir="right" aria-label="Right">►</button>
+  <button class="dpad-btn dpad-down" data-dir="down" aria-label="Down">▼</button>
+</div>
+
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html>
